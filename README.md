@@ -42,7 +42,9 @@ Error Recovery: Intelligent failure handling and retries
 Security: No hardcoded credentials, IAM role-based access
 
 🏗️ Architecture
-![L1 BOT -19 09 2025](https://github.com/user-attachments/assets/7d3ae169-702f-43 Engine**: AWS Bedrock (Amazon Nova Pro)
+![L1 BOT -19 09 2025](https://github.com/user-attachments/assets/967a03fe-ae11-43d3-b22e-0654298743e7)
+
+Engine**: AWS Bedrock (Amazon Nova Pro)
 
 Backend: Python Flask with cross-account IAM
 

@@ -1,0 +1,159 @@
+# ========================================
+# L1 Activity Automation - .gitignore
+# Flask Backend + React Frontend
+# ========================================
+
+# Environment Variables (CRITICAL - Contains AWS credentials)
+backend/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python Backend Files
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.Python
+backend/venv/
+backend/env/
+backend/.venv/
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+backend/.pytest_cache/
+backend/htmlcov/
+backend/.coverage
+backend/.nyc_output
+backend/*.log
+
+# Flask Session Files
+backend/flask_session/
+
+# React Frontend Files
+frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+frontend/build/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.local-chromium/
+
+# Package Lock Files (optional - you can include these)
+# frontend/package-lock.json
+# frontend/yarn.lock
+
+# IDE and Editor Files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# AWS and Deployment Files
+*.pem
+*.key
+deployment/logs/
+deployment/*.log
+
+# CI/CD Generated Files
+.github/secrets/
+
+# Testing Coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime Data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# ESLint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+.njsproj
+*.sln
+*.sw?
+
+# ========================================
+# END - L1 Activity Automation .gitignore
+# ========================================

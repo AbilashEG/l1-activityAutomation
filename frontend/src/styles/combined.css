@@ -1,0 +1,1279 @@
+/* combined.css - L1 Activity Bot with Agentic Components + Alarm Configuration - PC Optimized */
+
+/* ✅ UPDATED: Container - Much larger for PC users */
+.mojobot-widget-container {
+  width: min(95vw, 1200px);  /* ✅ UPDATED: Much wider - was 90vw, 800px */
+  height: calc(100vh - 60px); /* ✅ UPDATED: Taller - was calc(100vh - 80px) */
+  max-height: 1000px;         /* ✅ UPDATED: Taller max height - was 850px */
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 6px 32px 0 rgba(80,56,239,0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 20px auto;
+  position: relative;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ✅ UPDATED: Responsive adjustments - Much larger for desktop */
+@media (min-width: 1200px) {
+  .mojobot-widget-container {
+    width: min(85vw, 1300px);  /* ✅ UPDATED: Even wider - was 75vw, 950px */
+    height: calc(100vh - 80px); /* ✅ UPDATED: Taller */
+  }
+}
+
+@media (min-width: 1600px) {
+  .mojobot-widget-container {
+    width: min(80vw, 1500px);  /* ✅ UPDATED: Much wider - was 65vw, 1100px */
+    height: calc(100vh - 100px); /* ✅ UPDATED: Taller */
+  }
+}
+
+/* Header - Fixed height to prevent overflow */
+.mojobot-header {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%);
+  color: white;
+  padding: 20px 25px 15px 25px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  box-shadow: 0 1px 5px rgba(80,56,239,0.11);
+  flex-shrink: 0;
+  min-height: 80px;
+}
+
+/* Avatar - Responsive sizing */
+.mojobot-avatar {
+  width: clamp(45px, 4vw, 55px);
+  height: clamp(45px, 4vw, 55px);
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+
+/* Title - Responsive font sizing */
+.mojobot-title {
+  font-weight: bold;
+  font-size: clamp(18px, 2.5vw, 24px);
+}
+
+/* Status - Responsive font sizing */
+.mojobot-status {
+  font-size: clamp(12px, 1.8vw, 16px);
+  color: #bbf5cb;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+/* Status dot - Responsive sizing */
+.mojobot-dot {
+  background-color: #19db5b;
+  border-radius: 50%;
+  width: clamp(8px, 1.2vw, 12px);
+  height: clamp(8px, 1.2vw, 12px);
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Menu - Responsive sizing */
+.mojobot-menu {
+  font-size: clamp(20px, 3vw, 28px);
+  opacity: 0.72;
+  cursor: pointer;
+  padding-left: 12px;
+  user-select: none;
+}
+
+/* ✅ UPDATED: Messages Area - Larger padding for PC */
+.mojobot-messages {
+  flex: 1;
+  overflow-y: auto;
+  background: #f3f6fa;
+  padding: 28px 24px;           /* ✅ UPDATED: More padding - was 20px 18px */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;                    /* ✅ UPDATED: More space - was 16px */
+  min-height: 0; /* Important for flex containers */
+}
+
+/* Enhanced scrollbar for better visibility */
+.mojobot-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mojobot-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.mojobot-messages::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.mojobot-messages::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Message Bubbles - Responsive sizing */
+.mojobot-bubble {
+  max-width: 80%;
+  padding: clamp(12px, 2vw, 20px) clamp(16px, 2.5vw, 26px);
+  border-radius: 20px;
+  font-size: clamp(14px, 1.8vw, 17px);
+  line-height: 1.5;
+  word-break: break-word;
+  display: inline-block;
+  box-shadow: 0 2px 10px rgba(80,56,239,0.08);
+}
+
+.mojobot-user {
+  background: linear-gradient(90deg, #6d4aff 0%, #7169e1 100%);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+  margin-left: auto;
+}
+
+.mojobot-bot {
+  background: #fff;
+  color: #363953;
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+  margin-right: auto;
+}
+
+/* Input Area - Fixed height to prevent overflow */
+.mojobot-inputbar {
+  padding: 15px 18px 18px 18px;
+  display: flex;
+  background: #f3f6fa;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-height: 70px;
+}
+
+/* Input field - Responsive sizing */
+.mojobot-input {
+  flex: 1;
+  border-radius: 20px;
+  border: 1px solid #e4e5ea;
+  padding: clamp(12px, 1.5vw, 16px) clamp(16px, 2vw, 20px);
+  font-size: clamp(14px, 1.8vw, 16px);
+  outline: none;
+  min-height: 20px;
+}
+
+/* Send button - Responsive sizing */
+.mojobot-send {
+  border: none;
+  background: #814fff;
+  border-radius: 50%;
+  width: clamp(45px, 5vw, 60px);
+  height: clamp(45px, 5vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(129,79,255,0.18);
+  flex-shrink: 0;
+}
+
+.mojobot-send:disabled {
+  background: #a89ed9;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.mojobot-send:hover:not(:disabled) {
+  background: #7043e6;
+  transform: scale(1.03);
+}
+
+/* ===================== AGENTIC COMPONENTS ===================== */
+
+/* ✅ UPDATED: Account cards - More spacious for PC */
+.account-groups-card {
+  background: #f8f9fb;
+  border-radius: 18px;          /* ✅ UPDATED: Larger radius - was 16px */
+  padding: 32px;                /* ✅ UPDATED: More padding - was 24px */
+  margin: 20px 0;               /* ✅ UPDATED: More margin - was 16px 0 */
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08); /* ✅ UPDATED: Larger shadow */
+  border: 1px solid #e7e9ed;
+}
+
+.account-groups-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid #e7e9ed;
+  padding-bottom: 12px;
+}
+
+/* Account Cards Container */
+.account-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual Account Card */
+.account-card {
+  background: #ffffff;
+  border: 1px solid #e2e6ea;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.account-card:hover {
+  border-color: #814fff;
+  box-shadow: 0 4px 16px rgba(129, 79, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.account-card:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(129, 79, 255, 0.2);
+}
+
+/* Account Card Content */
+.account-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.account-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-stats .configured {
+  color: #10b981;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.account-stats .configured::before {
+  content: "✅";
+  font-size: 12px;
+}
+
+.account-stats .unconfigured {
+  color: #f59e0b;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.account-stats .unconfigured::before {
+  content: "⚠️";
+  font-size: 12px;
+}
+
+.expand-arrow {
+  color: #814fff;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.account-card:hover .expand-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ✅ UPDATED: Instance Details Table - More spacious for PC */
+.instance-details-card {
+  background: #f8f9fb;
+  border-radius: 18px;          /* ✅ UPDATED: Larger radius - was 16px */
+  padding: 32px;                /* ✅ UPDATED: More padding - was 24px */
+  margin: 20px 0;               /* ✅ UPDATED: More margin - was 16px 0 */
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08); /* ✅ UPDATED: Larger shadow */
+  border: 1px solid #e7e9ed;
+}
+
+.instance-details-card h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a5568;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+/* Instance Table Container with horizontal scroll */
+.instance-table-container {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e2e6ea;
+  min-width: 100%;
+}
+
+/* ✅ UPDATED: Instance Table - Larger for PC with Actions Column */
+.instances-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;              /* ✅ UPDATED: Larger font - was 14px */
+  table-layout: fixed;
+  min-width: 1200px;            /* ✅ UPDATED: Larger minimum for actions column */
+}
+
+.instances-table thead {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%);
+}
+
+/* ✅ UPDATED: Table headers - Larger text for PC with Actions Column */
+.instances-table th {
+  color: white;
+  padding: 26px 24px;           /* ✅ UPDATED: More padding - was 24px 20px */
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;              /* ✅ UPDATED: Larger font - was 13px */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  min-width: 140px;             /* ✅ UPDATED: Wider columns - was 120px */
+}
+
+/* ✅ UPDATED: Set specific column widths for Actions Table */
+.instances-table th:nth-child(1) { width: 18%; }  /* Instance ID */
+.instances-table th:nth-child(2) { width: 18%; }  /* Instance Name */
+.instances-table th:nth-child(3) { width: 12%; }  /* Status */
+.instances-table th:nth-child(4) { width: 12%; }  /* Region */
+.instances-table th:nth-child(5) { width: 12%; }  /* Platform */
+.instances-table th:nth-child(6) { width: 18%; }  /* CW Agent Config */
+.instances-table th:nth-child(7) { width: 30%; }  /* Actions - NEW */
+
+/* ✅ UPDATED: Table cells - More spacious for PC + FIXED alignment */
+.instances-table td {
+  padding: 16px 12px !important;      /* ✅ REDUCED: Less padding for better fit */
+  border-bottom: 1px solid #f1f3f4;
+  color: #4a5568;
+  vertical-align: middle !important;  /* ✅ ADDED: Force middle alignment */
+  white-space: nowrap;
+  min-height: 60px !important;        /* ✅ REDUCED: Smaller row height */
+}
+
+.instances-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.instances-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.instances-table tbody tr:hover {
+  background-color: #f8f9fb;
+}
+
+/* Selectable Instance Row */
+.instances-table .selectable {
+  cursor: pointer;
+  position: relative;
+}
+
+.instances-table .selectable:hover {
+  background-color: #f0f4ff;
+  box-shadow: inset 3px 0 0 #814fff;
+}
+
+.instances-table .selectable:active {
+  background-color: #e6efff;
+}
+
+/* Instance ID Styling */
+.instance-id {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Instance Name Styling */
+.instance-name {
+  font-weight: 500;
+  color: #333;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.instance-name:hover {
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* ✅ UPDATED: Actions Column Alignment - FIXED positioning */
+.actions-column {
+  white-space: nowrap;
+  overflow: visible;
+  vertical-align: middle !important;  /* ✅ ADDED: Force middle alignment */
+  text-align: center !important;      /* ✅ ADDED: Center align */
+  position: relative;                  /* ✅ ADDED: Proper positioning */
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center !important;     /* ✅ CHANGED: Center instead of flex-start */
+  justify-content: center !important; /* ✅ ADDED: Center vertically */
+  min-height: 60px;                   /* ✅ ADDED: Minimum height for alignment */
+  padding: 8px 4px;                   /* ✅ ADDED: Padding for better spacing */
+}
+
+/* ✅ NEW: Status Badges for Instance States */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge.running {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.stopped {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* ✅ NEW: Platform Badge */
+.platform-badge {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ✅ UPDATED: Selectable instance buttons - Larger for PC */
+.selectable-instance {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%);
+  color: white;
+  padding: 14px 20px;           /* ✅ UPDATED: More padding - was 12px 16px */
+  border-radius: 10px;          /* ✅ UPDATED: Larger radius - was 8px */
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-weight: 600;
+  font-size: 14px;              /* ✅ UPDATED: Larger font - was 13px */
+  display: inline-block;
+  box-shadow: 0 3px 6px rgba(129, 79, 255, 0.3); /* ✅ UPDATED: Larger shadow */
+  transition: all 0.2s ease;
+}
+
+.selectable-instance:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(129, 79, 255, 0.4);
+}
+
+/* ✅ UPDATED: Status Indicators - Larger for PC */
+.configured {
+  color: #047857;
+  background-color: #ecfdf5;
+  border: 1px solid #d1fae5;
+  font-weight: 700;
+  font-size: 15px;              /* ✅ UPDATED: Larger text - was 14px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;                    /* ✅ UPDATED: More space - was 8px */
+  padding: 10px 16px;           /* ✅ UPDATED: More padding - was 8px 12px */
+  border-radius: 8px;           /* ✅ UPDATED: Larger radius - was 6px */
+  line-height: 1.3;
+}
+
+.configured::after {
+  display: none;  /* Hide CSS icons */
+}
+
+.not-configured {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  font-weight: 700;
+  font-size: 15px;              /* ✅ UPDATED: Larger text - was 14px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;                    /* ✅ UPDATED: More space - was 8px */
+  padding: 10px 16px;           /* ✅ UPDATED: More padding - was 8px 12px */
+  border-radius: 8px;           /* ✅ UPDATED: Larger radius - was 6px */
+  line-height: 1.3;
+}
+
+.not-configured::after {
+  display: none;  /* Hide CSS icons */
+}
+
+.not-available {
+  color: #6b7280;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+  font-size: 15px;              /* ✅ UPDATED: Larger text - was 14px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;                    /* ✅ UPDATED: More space - was 8px */
+  padding: 10px 16px;           /* ✅ UPDATED: More padding - was 8px 12px */
+  border-radius: 8px;           /* ✅ UPDATED: Larger radius - was 6px */
+  line-height: 1.3;
+}
+
+.not-available::after {
+  display: none;  /* Hide CSS icons */
+}
+
+/* ✅ UPDATED: Action Button Styles */
+.btn {
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%); /* ✅ EXACT match to YOUR colors */
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(90deg, #7043e6 0%, #6452c7 100%); /* ✅ Darker version of YOUR colors */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(129, 79, 255, 0.3); /* ✅ Using your exact purple */
+}
+
+/* ✅ NEW: Loading state for submit button */
+.btn-primary:disabled {
+  background: linear-gradient(90deg, #9CA3AF, #6B7280) !important;
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
+}
+
+/* ✅ UPDATED: Configure Alarms Button - Better positioning */
+.btn-warning {
+  background-color: #F59E0B !important;
+  border-color: #F59E0B !important;
+  color: white !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  border: none !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 120px !important;
+  height: 32px !important;            /* ✅ ADDED: Fixed height */
+  position: relative !important;      /* ✅ ADDED: Proper positioning */
+  z-index: 10 !important;             /* ✅ ADDED: Above other elements */
+}
+
+.btn-warning:hover:not(:disabled) {
+  background-color: #D97706 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+}
+
+.btn-sm {
+  font-size: 11px;
+  padding: 6px 10px;
+  min-width: 100px;
+}
+
+/* ✅ NEW: Instruction text alignment */
+.instruction-text {
+  color: #814fff !important;          /* ✅ Matching your purple theme */
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+  text-align: center !important;
+  display: block !important;
+  margin-top: 4px !important;
+}
+
+/* ✅ NEW: Better Button Hover in Table */
+.instances-table tbody tr:hover .btn-warning {
+  transform: translateY(-1px) scale(1.02) !important;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4) !important;
+}
+
+/* ✅ NEW: Status and configured messages */
+.status-message {
+  color: #6B7280;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.configured-message {
+  color: #10B981;
+  font-size: 11px;
+}
+
+/* ✅ NEW: Summary Statistics */
+.instance-summary {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #F8FAFC;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+}
+
+.no-instances {
+  text-align: center;
+  padding: 40px;
+  color: #6B7280;
+}
+
+/* ===================== ALARM CONFIGURATION MODAL ===================== */
+
+/* ✅ UPDATED: Alarm Modal Overlay - Matching UI Theme */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ✅ UPDATED: Alarm Modal Content - Matching Bot Theme */
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(129, 79, 255, 0.2) !important; /* ✅ YOUR purple */
+  animation: modalSlideIn 0.3s ease-out;
+  border: 2px solid #E5E7EB;
+  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.alarm-config-modal {
+  max-width: 650px;
+  width: 90%;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ✅ UPDATED: Alarm Modal Header - EXACT match to YOUR gradient */
+.modal-header {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%) !important; /* ✅ EXACT match to your header */
+  color: white;
+  padding: 24px 28px;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 4px 12px rgba(129, 79, 255, 0.2); /* ✅ Using your exact purple */
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-header p {
+  margin: 10px 0 0 0;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+/* ✅ NEW: Alarm Modal Body */
+.modal-body {
+  padding: 28px;
+  background: #FAFBFC;
+}
+
+/* ✅ UPDATED: Configuration Row Styling */
+.config-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  border: 2px solid #E2E8F0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ✅ UPDATED: Config row hover - Matching YOUR colors */
+.config-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(129, 79, 255, 0.12) !important; /* ✅ YOUR purple */
+  border-color: rgba(129, 79, 255, 0.3) !important;          /* ✅ YOUR purple */
+}
+
+.config-row label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 1rem;
+}
+
+.config-row input[type="number"] {
+  padding: 12px 16px;
+  border: 2px solid #D1D5DB;
+  border-radius: 8px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: border-color 0.2s ease;
+  background: white;
+}
+
+/* ✅ UPDATED: Modal focus states - Matching YOUR purple */
+.config-row input[type="number"]:focus,
+.config-row select:focus {
+  outline: none !important;
+  border-color: #814fff !important;  /* ✅ YOUR exact purple */
+  box-shadow: 0 0 0 3px rgba(129, 79, 255, 0.1) !important; /* ✅ YOUR purple with transparency */
+}
+
+.config-row select {
+  padding: 12px 16px;
+  border: 2px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  min-width: 100px;
+}
+
+/* ✅ UPDATED: Status Check Always Enabled Styling */
+.config-row.status-check {
+  background-color: #F0FDF4 !important;
+  border-color: #BBF7D0 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* ✅ UPDATED: Alarm Preview Section */
+.alarm-preview {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A) !important;
+  border: 2px solid #F59E0B !important;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15) !important;
+}
+
+.alarm-preview h4 {
+  margin: 0 0 16px 0;
+  color: #92400E;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alarm-preview ul {
+  margin: 0;
+  padding-left: 24px;
+  color: #78350F;
+}
+
+.alarm-preview li {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+/* ✅ UPDATED: Modal Footer - Matching Button Styles */
+.modal-footer {
+  padding: 24px 28px;
+  border-top: 2px solid #E5E7EB;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  background: #FAFBFC;
+}
+
+.modal-footer .btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  min-width: 120px;
+  transition: all 0.2s ease;
+}
+
+.modal-footer .btn-secondary {
+  background: #F3F4F6;
+  color: #374151;
+  border: 2px solid #D1D5DB;
+}
+
+.modal-footer .btn-secondary:hover {
+  background: #E5E7EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ UPDATED: Modal buttons - Matching YOUR button colors */
+.modal-footer .btn-primary {
+  background: linear-gradient(90deg, #814fff 0%, #7169e1 100%) !important; /* ✅ EXACT match */
+  color: white !important;
+  border: none !important;
+}
+
+.modal-footer .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(90deg, #7043e6 0%, #6452c7 100%) !important; /* ✅ Darker version of YOUR colors */
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 16px rgba(129, 79, 255, 0.4) !important; /* ✅ Using your exact purple */
+}
+
+/* Instance Status Badges */
+.instance-status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-running {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-stopped {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* Region Badges */
+.region-badge {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* ✅ UPDATED: Better mobile responsiveness for modal */
+@media (max-width: 768px) {
+  .account-cards-container {
+    gap: 8px;
+  }
+  
+  .account-card {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .expand-arrow {
+    align-self: flex-end;
+  }
+  
+  .instances-table {
+    font-size: 12px;
+    min-width: 800px;
+  }
+  
+  .instances-table th,
+  .instances-table td {
+    padding: 16px 12px;
+  }
+  
+  .selectable-instance {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  
+  .configured,
+  .not-configured,
+  .not-available {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+    min-height: 50px;
+  }
+  
+  .btn-warning {
+    min-width: 100px !important;
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+    height: 28px !important;
+  }
+  
+  .btn-sm {
+    font-size: 10px;
+    padding: 4px 8px;
+    min-width: 80px;
+  }
+  
+  .alarm-config-modal {
+    width: 95% !important;
+    max-width: 95% !important;
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-groups-card,
+  .instance-details-card {
+    padding: 16px;
+    margin: 12px 0;
+  }
+  
+  .instances-table th,
+  .instances-table td {
+    padding: 8px 6px;
+  }
+  
+  .instances-table th {
+    font-size: 11px;
+  }
+  
+  .config-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .config-row > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Footer - Responsive sizing */
+.mojobot-footer {
+  color: #7d7b9d;
+  font-size: clamp(10px, 1.4vw, 13px);
+  text-align: right;
+  padding: 6px 25px 12px 0;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .mojobot-widget-container {
+    width: min(85vw, 700px);
+    height: calc(100vh - 60px);
+  }
+  
+  .mojobot-messages {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  .mojobot-widget-container {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+    margin: 10px;
+    border-radius: 16px;
+  }
+  
+  .mojobot-header {
+    padding: 16px 18px 12px 18px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    min-height: 70px;
+  }
+  
+  .mojobot-messages {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+  
+  .mojobot-inputbar {
+    padding: 12px 16px 16px 16px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    min-height: 65px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .mojobot-widget-container {
+    width: calc(100vw - 10px);
+    height: calc(100vh - 20px);
+    margin: 5px;
+  }
+}
+
+/* ✅ UPDATED: Large desktop displays - Maximize screen usage */
+@media (min-width: 1920px) {
+  .mojobot-widget-container {
+    width: min(75vw, 1600px);  /* ✅ UPDATED: Very wide - was 50vw, 1200px */
+    height: calc(100vh - 120px); /* ✅ UPDATED: Almost full height */
+    max-height: 1200px;         /* ✅ UPDATED: Much taller max height */
+  }
+}
+
+/* ✅ NEW: Ultra-wide displays (4K monitors) */
+@media (min-width: 2560px) {
+  .mojobot-widget-container {
+    width: min(70vw, 1800px);   /* ✅ NEW: For 4K/ultra-wide monitors */
+    height: calc(100vh - 140px);
+    max-height: 1400px;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.account-groups-card,
+.instance-details-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Confirmation Modal Styles - Keeping Existing */
+.confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.confirmation-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 520px;
+  width: 90vw;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.confirmation-modal .modal-header h3 {
+  margin: 0 0 20px 0;
+  color: #f59e0b;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.confirmation-modal .modal-body {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.instance-info {
+  background: #f8f9fb;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.instance-info p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.instance-info code {
+  background: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 13px;
+}
+
+.warning-section {
+  margin-bottom: 20px;
+}
+
+.warning-section ul {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.warning-section li {
+  margin: 6px 0;
+}
+
+.confirmation-question {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  color: #856404;
+}
+
+.confirmation-modal .modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.modal-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.confirm-btn {
+  background: #814fff;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: #7043e6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(129, 79, 255, 0.3);
+}

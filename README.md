@@ -17,7 +17,7 @@ This is true agentic AI - the system understands intent, makes decisions, and ta
 🤖 Agentic AI Capabilities
 Natural Language Interface: "configure cloudwatch for my instances"
 
-Intent Recognition: Powered by AWS Bedrock (Claude 3 Sonnet)
+Intent Recognition: Powered by AWS Bedrock (Amazon Nova Pro)
 
 Autonomous Action: Takes real infrastructure actions based on conversation
 
@@ -42,13 +42,7 @@ Error Recovery: Intelligent failure handling and retries
 Security: No hardcoded credentials, IAM role-based access
 
 🏗️ Architecture
-![L1 BOT -19 09 2025](https://github.com/user-attachments/assets/7d3ae169-702f-43ed-bb8e-abde79abd112)
-
-
-    F --> I[Account Groups]
-Technology Stack:
-
-AI Engine: AWS Bedrock (Claude 3 Sonnet)
+![L1 BOT -19 09 2025](https://github.com/user-attachments/assets/7d3ae169-702f-43 Engine**: AWS Bedrock (Amazon Nova Pro)
 
 Backend: Python Flask with cross-account IAM
 
@@ -68,8 +62,8 @@ EC2 instance for deployment
 
 1. Clone Repository
 bash
-git clone https://github.com/AWS-daml/l1-activity-automation.git
-cd l1-activity-automation
+git clone https://github.com/AbilashEG/l1-activityAutomation.git
+cd l1-activityAutomation
 2. Environment Setup
 bash
 # Backend setup
@@ -175,7 +169,7 @@ json
 🛠️ Development
 Project Structure
 text
-l1-activity-automation/
+l1-activityAutomation/
 ├── backend/
 │   ├── app.py                 # Main Flask application
 │   ├── wsgi.py               # Gunicorn entry point

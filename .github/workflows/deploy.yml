@@ -23,78 +23,166 @@ jobs:
         port: 22
         script: |
           set -e
-          echo "🚀 Starting L1 Activity Automation Deployment..."
+          echo "=========================================="
+          echo "🚀 L1 Activity Automation CI/CD Deployment"
+          echo "=========================================="
           
           # Update repository
+          echo "📥 Pulling latest code from GitHub..."
           cd /home/ec2-user/l1-activity-automation
           git pull origin master
           
-          # Backend setup (NO VIRTUAL ENVIRONMENT!)
-          echo "🐍 Setting up Python backend..."
+          # ========================================
+          # BACKEND SETUP (MATCHES deploy.sh)
+          # ========================================
+          echo "🐍 Setting up Flask backend..."
           cd backend
           
-          # Install dependencies globally (matching your working setup)
-          pip3 install -r requirements.txt --user --upgrade
+          # Use virtual environment (matches deploy.sh)
+          if [ ! -d "venv" ]; then
+            echo "Creating Python virtual environment..."
+            python3 -m venv venv
+          fi
           
-          # Stop existing PM2 process
+          source venv/bin/activate
+          pip install --upgrade pip --quiet
+          pip install -r requirements.txt --quiet
+          
+          # Kill any old PM2 processes (cleanup from old deployment)
+          echo "🛑 Cleaning up old PM2 processes..."
           pm2 stop l1-backend 2>/dev/null || true
           pm2 delete l1-backend 2>/dev/null || true
+          pm2 kill 2>/dev/null || true
           
-          # Start with Gunicorn (production mode)
-          pm2 start "gunicorn --bind 0.0.0.0:5000 --workers 2 wsgi:app" --name l1-backend
+          # Restart systemd service (matches deploy.sh)
+          echo "🔄 Restarting backend with systemd..."
+          sudo systemctl daemon-reload
+          sudo systemctl restart l1-automation
           
-          # Frontend setup  
-          echo "⚛️ Setting up React frontend..."
-          cd ../frontend
-          npm ci --silent
-          npm run build
-          
-          # Update frontend files
-          sudo cp -r build/* /var/www/html/
-          
-          # Fix Nginx configuration (CRITICAL PROXY FIX)
-          echo "🌐 Updating Nginx configuration..."
-          sudo tee /etc/nginx/conf.d/l1-automation.conf > /dev/null <<'EOF'
-          server {
-              listen 80;
-              server_name _;
-              
-              location / {
-                  root /var/www/html;
-                  index index.html;
-                  try_files $uri $uri/ /index.html;
-              }
-              
-              location /api/ {
-                  proxy_pass http://127.0.0.1:5000/api/;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_redirect off;
-              }
-          }
-          EOF
-          
-          # Restart Nginx
-          sudo nginx -t && sudo systemctl restart nginx
-          
-          # Save PM2 configuration
-          pm2 save
-          
-          # Health checks with retries
-          echo "🧪 Running health checks..."
+          # Wait for backend to start
+          echo "⏳ Waiting for backend to start..."
           sleep 5
           
-          for i in {1..3}; do
-            if curl -sf http://localhost:5000/api/health; then
-              echo "✅ Backend healthy on attempt $i"
+          # Verify systemd service
+          if sudo systemctl is-active --quiet l1-automation; then
+            echo "✅ Backend systemd service is running"
+            sudo systemctl status l1-automation --no-pager | head -10
+          else
+            echo "❌ Backend systemd service failed to start"
+            sudo journalctl -u l1-automation -n 50 --no-pager
+            exit 1
+          fi
+          
+          # ========================================
+          # FRONTEND SETUP (MATCHES deploy.sh)
+          # ========================================
+          echo "⚛️  Setting up React frontend..."
+          cd ../frontend
+          
+          # Clean install (matches deploy.sh)
+          echo "🧹 Cleaning previous builds..."
+          rm -rf node_modules package-lock.json build
+          
+          echo "📦 Installing Node.js dependencies..."
+          npm install --silent
+          
+          echo "🔨 Building React application..."
+          npm run build
+          
+          # Copy build files
+          echo "📂 Deploying frontend files..."
+          sudo cp -r build/* /var/www/html/
+          sudo chown -R nginx:nginx /var/www/html/
+          
+          # ========================================
+          # NGINX CONFIGURATION (USES EXISTING)
+          # ========================================
+          echo "🌐 Verifying Nginx configuration..."
+          
+          # Test nginx config
+          if sudo nginx -t 2>&1; then
+            echo "✅ Nginx configuration is valid"
+          else
+            echo "❌ Nginx configuration has errors"
+            sudo nginx -t
+            exit 1
+          fi
+          
+          # Restart Nginx
+          echo "🔄 Restarting Nginx..."
+          sudo systemctl restart nginx
+          
+          # Verify Nginx is running
+          if sudo systemctl is-active --quiet nginx; then
+            echo "✅ Nginx is running"
+          else
+            echo "❌ Nginx failed to start"
+            sudo systemctl status nginx --no-pager
+            exit 1
+          fi
+          
+          # ========================================
+          # HEALTH CHECKS
+          # ========================================
+          echo "🧪 Running comprehensive health checks..."
+          sleep 3
+          
+          # Test backend (systemd on 127.0.0.1:5000)
+          echo "🔍 Testing backend API..."
+          BACKEND_HEALTHY=false
+          for i in {1..5}; do
+            if curl -sf http://127.0.0.1:5000/api/health > /dev/null 2>&1; then
+              echo "✅ Backend API healthy (attempt $i/5)"
+              BACKEND_HEALTHY=true
               break
             else
-              echo "⚠️ Health check $i failed, retrying..."
+              echo "⏳ Backend health check attempt $i/5 failed, retrying in 3s..."
               sleep 3
             fi
           done
           
-          echo "✅ L1 Activity Automation deployed successfully!"
-          echo "🌐 URL: http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)"
-          pm2 status
+          if [ "$BACKEND_HEALTHY" = false ]; then
+            echo "❌ Backend health check failed after 5 attempts"
+            echo "📋 Backend logs:"
+            sudo journalctl -u l1-automation -n 30 --no-pager
+            exit 1
+          fi
+          
+          # Test frontend
+          echo "🔍 Testing frontend..."
+          PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4 2>/dev/null || echo "localhost")
+          
+          if curl -sf "http://${PUBLIC_IP}/" > /dev/null 2>&1; then
+            echo "✅ Frontend is accessible"
+          else
+            echo "⚠️  Frontend health check failed (may be normal if security groups restrict access)"
+          fi
+          
+          # Test API proxy through Nginx
+          echo "🔍 Testing Nginx API proxy..."
+          if curl -sf "http://${PUBLIC_IP}/api/health" > /dev/null 2>&1; then
+            echo "✅ Nginx API proxy working"
+          else
+            echo "⚠️  Nginx API proxy check failed (may be normal if security groups restrict access)"
+          fi
+          
+          # ========================================
+          # DEPLOYMENT SUMMARY
+          # ========================================
+          echo ""
+          echo "=========================================="
+          echo "✅ DEPLOYMENT COMPLETED SUCCESSFULLY!"
+          echo "=========================================="
+          echo "🌐 Application URL: http://${PUBLIC_IP}"
+          echo "🔧 Backend: systemd service 'l1-automation'"
+          echo "⚙️  Python: Virtual environment (venv)"
+          echo "🌐 Frontend: Nginx serving /var/www/html"
+          echo "🔄 API Proxy: Nginx → 127.0.0.1:5000"
+          echo ""
+          echo "📊 Service Status:"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          sudo systemctl status l1-automation --no-pager | grep -A 2 "Active:"
+          echo ""
+          echo "📋 View logs: sudo journalctl -u l1-automation -f"
+          echo "🔄 Restart: sudo systemctl restart l1-automation"
+          echo "=========================================="

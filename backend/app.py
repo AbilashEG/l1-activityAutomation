@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 import boto3
 import logging
 from uuid import uuid4
+import base64
+from assessment_report import assume_cross_account_role
+from assessment_report import generate_report_main      # Import your report main function
+import tempfile
+import shutil
 
 # Load environment variables
 load_dotenv()
@@ -1373,6 +1378,115 @@ def converse():
             "error": str(e),
             "message": "CloudWatch Agent Assistant ready. Say 'configure cloudwatch' to begin."
         }), 500
+# ========== ASSESSMENT REPORT ENDPOINT ==========
+# ✅ NEW: Assessment Report Generation Endpoint
+# Assuming you have imported flask, jsonify, request, tempfile, shutil, boto3, assume_cross_account_role, and generate_report_main
+
+@app.route('/api/generate-assessment-report', methods=['POST'])
+def generate_assessment_report():
+    print("\n" + "="*80)
+    print("🚀 AWS ASSESSMENT REPORT - MULTIPART VERSION")
+    print("="*80)
+
+    temp_cache = None
+    regions_to_scan = None
+
+    try:
+        # 1) Accept accountId/region from form OR JSON
+        account_id = request.form.get('accountId')
+        region = request.form.get('region')
+
+        if not account_id:
+            data = request.get_json(silent=True) or {}
+            account_id = data.get('accountId')
+            region = region or data.get('region')
+
+        if not region:
+            region = 'us-east-1'
+
+        if not account_id or not account_id.isdigit() or len(account_id) != 12:
+            return jsonify({'success': False, 'error': 'Invalid or missing accountId'}), 400
+
+        print(f"✅ Account ID: {account_id}")
+        print(f"✅ Primary Region: {region}")
+
+        # 2) Require files from UI
+        if 'template' not in request.files or 'image' not in request.files:
+            print("❌ Missing template or architecture image file")
+            return jsonify({'success': False, 'error': 'Missing template or image file'}), 400
+
+        template_file = request.files['template']
+        image_file = request.files['image']
+
+        import tempfile, shutil, os, base64
+        temp_cache = tempfile.mkdtemp(prefix='assessment_report_')
+        print(f"📂 Temporary cache: {temp_cache}")
+
+        template_path = os.path.join(temp_cache, 'template.docx')
+        image_path = os.path.join(temp_cache, 'architecture.png')
+
+        template_file.save(template_path)
+        image_file.save(image_path)
+
+        # 3) Assume role for that account
+        try:
+            session = assume_cross_account_role(account_id)
+            print("✅ Cross-account role assumed successfully")
+        except Exception as e:
+            print(f"❌ Failed to assume role: {e}")
+            shutil.rmtree(temp_cache, ignore_errors=True)
+            return jsonify({'success': False, 'error': f'Failed to assume target account role: {str(e)}'}), 403
+
+        # 4) Generate report
+        result = generate_report_main({
+            'account_id': account_id,
+            'region': region,
+            'regions_to_scan': None,
+            'template_path': template_path,
+            'image_path': image_path,
+            'session': session,
+        })
+
+        if result.get('status') != 'success':
+            error_msg = result.get('error', 'Unknown error')
+            print(f"❌ Report generation failed: {error_msg}")
+            shutil.rmtree(temp_cache, ignore_errors=True)
+            return jsonify({'success': False, 'error': error_msg}), 500
+
+        report_file = result.get('report_file')
+        regions_scanned = result.get('regions_scanned', 0)
+
+        if not report_file or not os.path.exists(report_file):
+            shutil.rmtree(temp_cache, ignore_errors=True)
+            return jsonify({'success': False, 'error': 'Report file not found'}), 500
+
+        file_size_mb = os.path.getsize(report_file) / (1024 * 1024)
+        with open(report_file, 'rb') as f:
+            report_b64 = base64.b64encode(f.read()).decode('utf-8')
+
+        shutil.rmtree(temp_cache, ignore_errors=True)
+
+        return jsonify({
+            'success': True,
+            'message': f'Report generated for account {account_id} across {regions_scanned} regions',
+            'accountId': account_id,
+            'region': region,
+            'regions_scanned': regions_scanned,
+            'reportBase64': report_b64,
+            'filename': f"AWS_Assessment_{account_id}_{region}.docx",
+            'file_size_mb': round(file_size_mb, 2),
+            'timestamp': datetime.utcnow().isoformat(),
+        }), 200
+
+    except Exception as e:
+        import traceback, shutil
+        print("❌ CRITICAL ERROR:", e)
+        print(traceback.format_exc())
+        if temp_cache:
+            shutil.rmtree(temp_cache, ignore_errors=True)
+        return jsonify({'success': False, 'error': str(e), 'error_type': type(e).__name__}), 500
+
+
 
 if __name__ == "__main__":
     import sys
@@ -1395,4 +1509,4 @@ if __name__ == "__main__":
     print("✅ To run in production:")
     print("1. Use: gunicorn --bind 0.0.0.0:5000 wsgi:app")
     print("2. Or deploy with systemd service")
-    print("3. Never use app.run() in production!")
+    print("3. Never use app.run() in production!") 
